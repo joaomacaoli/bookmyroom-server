@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.macaoli.bookmyroom.controller.dto.CreateAppointmentDTO;
+import com.macaoli.bookmyroom.controller.dto.UpdateAppointmentDTO;
 import com.macaoli.bookmyroom.entity.Appointment;
 import com.macaoli.bookmyroom.entity.Room;
 import com.macaoli.bookmyroom.repository.AppointmentRepository;
@@ -54,6 +55,33 @@ public class AppointmentService {
 
   public Optional<Appointment> getAppointmentById(String appointmentId) {
     return appointmentRepository.findById(UUID.fromString(appointmentId));
+  }
+
+  public void updateAppointmentById(
+    String appointmentId,
+    UpdateAppointmentDTO updateAppointmentDTO
+  ){
+    var id = UUID.fromString(appointmentId);
+
+    var appointmentEntity = appointmentRepository.findById(id);
+
+    if (appointmentEntity.isPresent()){
+      var appointment = appointmentEntity.get();
+
+      if (updateAppointmentDTO.date() != null)
+        appointment.setDate(updateAppointmentDTO.date());
+
+      if (updateAppointmentDTO.shift() != null)
+      appointment.setShift(updateAppointmentDTO.shift());
+
+      if (updateAppointmentDTO.time() != null)
+      appointment.setTimeSlot(updateAppointmentDTO.time());
+
+      if (updateAppointmentDTO.description() != null)
+      appointment.setDescription(updateAppointmentDTO.description());
+
+      appointmentRepository.save(appointment);
+    }
   }
 
   public void deleteAppointmentById(String appointmentId) {

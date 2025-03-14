@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.macaoli.bookmyroom.controller.dto.CreateAppointmentDTO;
+import com.macaoli.bookmyroom.controller.dto.UpdateAppointmentDTO;
 import com.macaoli.bookmyroom.entity.Appointment;
 import com.macaoli.bookmyroom.service.AppointmentService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 @RestController
@@ -58,6 +58,16 @@ public class AppointmentController {
     if (appointment.isEmpty()) return ResponseEntity.notFound().build();
 
       return ResponseEntity.ok(appointment.get());
+  }
+
+  @PutMapping("/{appointmentId}")
+  public ResponseEntity<Void> updateAppointmentById(
+    @PathVariable("appointmentId") String appointmentId,
+    @RequestBody UpdateAppointmentDTO updateAppointmentDTO
+    ) {
+    appointmentService.updateAppointmentById(appointmentId, updateAppointmentDTO);
+
+    return ResponseEntity.noContent().build();
   }
 
   @DeleteMapping("/{appointmentId}")
