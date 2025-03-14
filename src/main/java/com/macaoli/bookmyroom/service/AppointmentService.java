@@ -1,6 +1,7 @@
 package com.macaoli.bookmyroom.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -50,4 +51,10 @@ public class AppointmentService {
   public List<Appointment> listAppointments() {
     return appointmentRepository.findAll();
   }
+
+
+  public Optional<Appointment> getAppointmentById(String appointmentId) {
+    return appointmentRepository.findById(UUID.fromString(appointmentId));
+  }
+
 }

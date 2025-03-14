@@ -14,6 +14,8 @@ import com.macaoli.bookmyroom.service.AppointmentService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -45,4 +47,16 @@ public class AppointmentController {
 
     return ResponseEntity.ok(appointments);
   }
+
+  @GetMapping("/{appointmentId}")
+  public ResponseEntity<Appointment> listAppointmentById(
+    @PathVariable("appointmentId") String appointmentId
+  ) {
+    var appointment = appointmentService.getAppointmentById(appointmentId);
+
+    if (appointment.isEmpty()) return ResponseEntity.notFound().build();
+
+      return ResponseEntity.ok(appointment.get());
+  }
+
 }
