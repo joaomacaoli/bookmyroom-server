@@ -12,6 +12,7 @@ import com.macaoli.bookmyroom.controller.dto.CreateAppointmentDTO;
 import com.macaoli.bookmyroom.entity.Appointment;
 import com.macaoli.bookmyroom.service.AppointmentService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -59,4 +60,12 @@ public class AppointmentController {
       return ResponseEntity.ok(appointment.get());
   }
 
+  @DeleteMapping("/{appointmentId}")
+  public ResponseEntity<Void> removeAppointmentById(
+    @PathVariable("appointmentId") String appointmentId
+  ){
+    appointmentService.deleteAppointmentById(appointmentId);
+
+    return ResponseEntity.noContent().build();
+  }
 }

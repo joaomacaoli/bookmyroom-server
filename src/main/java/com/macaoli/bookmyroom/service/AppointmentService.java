@@ -52,9 +52,15 @@ public class AppointmentService {
     return appointmentRepository.findAll();
   }
 
-
   public Optional<Appointment> getAppointmentById(String appointmentId) {
     return appointmentRepository.findById(UUID.fromString(appointmentId));
   }
 
+  public void deleteAppointmentById(String appointmentId) {
+    var id = UUID.fromString(appointmentId);
+
+    var appointmentExists = appointmentRepository.existsById(id);
+
+    if (appointmentExists) appointmentRepository.deleteById(id);
+  }
 }
